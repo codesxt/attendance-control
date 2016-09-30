@@ -13,21 +13,23 @@ angular.module('app')
 
 angular.module('app')
 .run(function ($rootScope, $location) {
-  //var url = 'ws://localhost:3000';
-  var url = "wss"+"://" + $location.host() + ":" + $location.port();
-  console.log("Attempting to open Websocket in: "+url);
-  var connection = new WebSocket(url);
-  connection.onopen = function () {
-    console.log('WebSocket connected to '+url);
-  };
-  connection.onclose = function (e) {
-    console.log('WebSocket closed. Reconnecting...');
-    setTimeout(connect, 1*1000);
-  };
-  connection.onmessage = function (e) {
-    var payload = JSON.parse(e.data);
-    $rootScope.$broadcast('ws:' + payload.topic, payload.data);
-  };
+  (function connect(){
+    var url = "wss"+"://" + $location.host() + ":" + $location.port();
+    console.log("Attempting to open Websocket in: "+url);
+    var connection = new WebSocket(url);
+    connection.onopen = function () {
+      console.log('WebSocket connected to '+url);
+    };
+    connection.onclose = function (e) {
+      console.log('WebSocket closed. Reconnecting...');
+      setTimeout(connect, 1*1000);
+    };
+    connection.onmessage = function (e) {
+      var payload = JSON.parse(e.data);
+      $rootScope.$broadcast('ws:' + payload.topic, payload.data);
+    };
+  })();
+  //var url = 'ws://localhost:3000';  
 });
 
 angular.module('app')
