@@ -22,7 +22,7 @@ angular.module('app')
   };
   connection.onclose = function (e) {
     console.log('WebSocket closed. Reconnecting...');
-    timeout(connect, 1*1000);
+    setTimeout(connect, 1*1000);
   };
   connection.onmessage = function (e) {
     var payload = JSON.parse(e.data);
