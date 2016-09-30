@@ -15,6 +15,7 @@ angular.module('app')
 .run(function ($rootScope, $location) {
   //var url = 'ws://localhost:3000';
   var url = "ws"+"://" + $location.host() + ":" + $location.port();
+  console.log("Attempting to open Websocket in: "+url);
   var connection = new WebSocket(url);
   connection.onopen = function () {
     console.log('WebSocket connected to '+url);
