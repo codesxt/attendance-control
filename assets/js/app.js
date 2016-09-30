@@ -20,6 +20,10 @@ angular.module('app')
   connection.onopen = function () {
     console.log('WebSocket connected to '+url);
   };
+  connection.onclose = function (e) {
+    console.log('WebSocket closed. Reconnecting...');
+    $timeout(connect, 5*1000);
+  };
   connection.onmessage = function (e) {
     var payload = JSON.parse(e.data);
     $rootScope.$broadcast('ws:' + payload.topic, payload.data);
