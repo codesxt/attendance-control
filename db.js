@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 //mongoose.set('debug', true);
 mongoose.Promise = global.Promise;
-var dbpath = process.env.MONGOLAB_URI || 'mongodb://localhost/attendance';
+var dbpath = process.env.MONGODB_URI || 'mongodb://localhost/attendance';
 mongoose.connect(dbpath, function(){
 	console.log('MongoDB connected.');
 });
